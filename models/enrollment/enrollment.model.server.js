@@ -16,7 +16,15 @@ function findSectionsForStudent(studentId) {
     .exec();
 }
 
+function findStudentsForSection(sectionId) {
+  return enrollmentModel
+      .find({section: sectionId})
+      .populate('student')
+    .exec();
+}
+
 module.exports = {
   enrollStudentInSection: enrollStudentInSection,
-  findSectionsForStudent: findSectionsForStudent
+  findSectionsForStudent: findSectionsForStudent,
+  findStudentsForSection: findStudentsForSection
 };
