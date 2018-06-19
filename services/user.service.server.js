@@ -2,7 +2,8 @@ module.exports = function (app) {
   app.get('/api/user', findAllUsers);
   app.get('/api/user/:username', findUserByUsername);
   app.post('/api/register', createUser);
-  app.get('/api/profile', profile);
+  app.get('/api/profile', getProfile);
+  app.put('/api/profile', updateProfile);
   app.post('/api/logout', logout);
   app.post('/api/login', login);
 
@@ -12,7 +13,7 @@ module.exports = function (app) {
     var credentials = req.body;
     userModel
       .findUserByCredentials(credentials)
-      .then(function(user) {
+      .then(function (user) {
         req.session['currentUser'] = user;
         res.json(user);
       })
@@ -20,7 +21,7 @@ module.exports = function (app) {
 
   function logout(req, res) {
     req.session.destroy();
-    res.send(200);
+    res.sendStatus(200);
   }
 
   function findUserByUsername(req, res) {
@@ -31,12 +32,22 @@ module.exports = function (app) {
       })
   }
 
-  function profile(req, res) {
-    res.send(req.session['currentUser']);
+  function getProfile(req, res) {
+    userModel.findUserById(req.session['currentUser'])
+      .then(function (user) {
+        res.json(user);
+      })
+  }
+
+  function updateProfile(req, res) {
+    var profile = req.body;
+    userModel.updateProfile(profile)
+      .then(res.sendStatus(200));
   }
 
   function createUser(req, res) {
     var user = req.body;
+    user['userType'] = 'Student';
     userModel.createUser(user)
       .then(function (user) {
         req.session['currentUser'] = user;
