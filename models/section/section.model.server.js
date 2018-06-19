@@ -43,11 +43,16 @@ function updateSection(sectionId, section) {
   })
 }
 
+function getSection(sectionId) {
+  return sectionModel.find({_id: sectionId});
+}
+
 module.exports = {
   createSection: createSection,
   findSectionsForCourse: findSectionsForCourse,
   decrementSectionSeats: decrementSectionSeats,
   incrementSectionSeats: incrementSectionSeats,
   deleteSection: deleteSection,
-  updateSection: updateSection
+  updateSection: updateSection,
+  getSection: getSection
 };
