@@ -1,6 +1,6 @@
 module.exports = function (app) {
   app.get('/api/user', findAllUsers);
-  app.get('/api/user/:userId', findUserById);
+  app.get('/api/user/:username', findUserByUsername);
   app.post('/api/register', createUser);
   app.get('/api/profile', profile);
   app.post('/api/logout', logout);
@@ -23,9 +23,9 @@ module.exports = function (app) {
     res.send(200);
   }
 
-  function findUserById(req, res) {
-    var id = req.params['userId'];
-    userModel.findUserById(id)
+  function findUserByUsername(req, res) {
+    var username = req.params['username'];
+    userModel.findUserByUsername(username)
       .then(function (user) {
         res.json(user);
       })

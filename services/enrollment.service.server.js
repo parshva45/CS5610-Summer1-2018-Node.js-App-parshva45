@@ -3,6 +3,7 @@ module.exports = function (app) {
   app.post('/api/section/:sectionId/enrollment', enrollStudentInSection);
   app.get('/api/student/section', findEnrolledSectionsForStudent);
 
+  var sectionModel = require('../models/section/section.model.server');
   var enrollmentModel = require('../models/enrollment/enrollment.model.server');
 
   function findEnrolledSectionsForStudent(req, res) {
