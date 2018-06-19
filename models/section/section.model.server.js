@@ -32,10 +32,22 @@ function deleteSection(sectionId) {
   })
 }
 
+function updateSection(sectionId, section) {
+  return sectionModel.update({
+    _id: sectionId
+  }, {
+    $set: {
+      name: section.name,
+      seats: section.seats
+    }
+  })
+}
+
 module.exports = {
   createSection: createSection,
   findSectionsForCourse: findSectionsForCourse,
   decrementSectionSeats: decrementSectionSeats,
   incrementSectionSeats: incrementSectionSeats,
-  deleteSection: deleteSection
+  deleteSection: deleteSection,
+  updateSection: updateSection
 };

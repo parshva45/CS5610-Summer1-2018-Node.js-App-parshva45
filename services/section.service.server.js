@@ -1,6 +1,7 @@
 module.exports = function (app) {
 
   app.post('/api/course/:courseId/section', createSection);
+  app.put('/api/section/:sectionId', updateSection);
   app.get('/api/course/:courseId/section', findSectionsForCourse);
   app.delete('/api/section/:sectionId', deleteSection);
 
@@ -33,6 +34,14 @@ module.exports = function (app) {
         return enrollmentModel
           .removeEnrollmentsForSection(sectionId)
       })
+      .then(res.sendStatus(200))
+  }
+
+  function updateSection(req, res) {
+    var sectionId = req.params['sectionId'];
+    var section = req.body;
+    sectionModel
+      .updateSection(sectionId, section)
       .then(res.sendStatus(200))
   }
 
