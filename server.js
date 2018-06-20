@@ -19,6 +19,10 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.get('/', function (req, res) {
+  res.send('Node.js app deployed successfully!')
+});
+
 var session = require('express-session')
 app.use(session({
   resave: false,
@@ -30,4 +34,4 @@ require('./services/user.service.server')(app);
 require('./services/section.service.server')(app);
 require('./services/enrollment.service.server')(app);
 
-app.listen(4000);
+app.listen(process.env.PORT || 4000);
