@@ -4,6 +4,7 @@ module.exports = function (app) {
   app.post('/api/register', createUser);
   app.get('/api/profile', getProfile);
   app.put('/api/profile', updateProfile);
+  app.delete('/api/profile', deleteProfile);
   app.post('/api/logout', logout);
   app.post('/api/login', login);
 
@@ -45,6 +46,11 @@ module.exports = function (app) {
       .then(res.sendStatus(200));
   }
 
+  function deleteProfile(req, res) {
+    userModel.deleteUserById(req.session['currentUser']['_id'])
+      .then(res.sendStatus(200));
+  }
+
   function createUser(req, res) {
     var user = req.body;
     user['userType'] = 'Student';
@@ -61,4 +67,4 @@ module.exports = function (app) {
         res.send(users);
       })
   }
-}
+};
