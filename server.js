@@ -1,9 +1,10 @@
 var express = require('express')
 var bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/webdev-summer1-2018-lectures');
+// mongoose.connect('mongodb://localhost/webdev-summer1-2018-lectures');
+mongoose.connect('mongodb://heroku_xp1r922l:d375n4iri74im00ur0oo99ij5v@ds263710.mlab.com:63710/heroku_xp1r922l');
 
-var app = express()
+var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,7 +24,7 @@ app.get('/', function (req, res) {
   res.send('Node.js app deployed successfully!')
 });
 
-var session = require('express-session')
+var session = require('express-session');
 app.use(session({
   resave: false,
   saveUninitialized: true,
