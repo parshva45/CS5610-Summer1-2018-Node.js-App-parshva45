@@ -1,6 +1,7 @@
 module.exports = function (app) {
 
   app.post('/api/section/:sectionId/enrollment', enrollStudentInSection);
+  app.delete('/api/section/:sectionId/enrollment/:enrollmentId', unenrollStudentInSection);
   app.get('/api/student/section', findEnrolledSectionsForStudent);
 
   var sectionModel = require('../models/section/section.model.server');
@@ -33,6 +34,21 @@ module.exports = function (app) {
       })
       .then(function (enrollment) {
         res.json(enrollment);
+      })
+  }
+
+  function unenrollStudentInSection(req, res) {
+    var sectionId = req.params.sectionId;
+    var enrollmentId = req.params.enrollmentId;
+
+    sectionModel
+      .incrementSectionSeats(sectionId)
+      .then(function () {
+        return enrollmentModel
+          .unenrollStudentInSection(enrollmentId)
+      })
+      .then(function () {
+        res.sendStatus(200);
       })
   }
 
